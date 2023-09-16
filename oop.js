@@ -61,40 +61,152 @@
 //? THIS: Child Class - SUPER: Parent Class
 
 
+// class Vehicle {
+//     vehicleIsActive=false
+//     constructor(vehicleType){
+//         this.vehicleType=vehicleType
+//     }
+// }
+
+
+// class Car extends Vehicle{
+//     isRunning =false
+//  constructor(brand, model ,year, vehicleType="Car"){
+//     super(vehicleType)
+//     this.brand=brand
+//     this.model=model
+//     this.year=year
+//  }
+//  runEngine(){
+//     this.isRunning =true
+//     console.log("motor çalıştı")
+//     return this.isRunning
+//  }
+// }
+
+// const ford = new Car ("ford", "Mustaaaang", 196,"Suv") 
+// console.log(ford)
+
+// class Accessory extends Car{
+
+//     constructor(accessoryName, brand, model, year, vehicleType = 'Car') {
+//         super(brand, model, year, vehicleType)
+//         this.accessoryName = accessoryName
+//     }
+// }
+
+// // const fordClimate = new Accessory("Bosh Climate","ford", "mustang", 1967 , "suv")
+// const fordClimate = new Accessory("Bosh Climate",...Object.values(ford))
+// console.log(fordClimate)
+
+//? Polymorphism: Miras aldığımız sınıfın özellik/methodlarını yeniden yazabilme.
+//? Override: Üst metodla aynı isim ve yapıda yeni bir metod yazma. (ezme / iptal etme / önceliğini alma)
+//? Overload: Üst metodla aynı isimde ama farklı yapıda (parametre adet/tip) yeni method oluşturma. (aynı anda ikiside aktif) (JS desteklemez)
+
+
+// class Vehicle {
+//     vehicleIsActive=false
+//     constructor(vehicleType){
+//         this.vehicleType=vehicleType
+//     }
+//     getDetails() {
+//         console.log('Vehicle getDetails çalıştı')
+//         return this.vehicleType
+//     }
+// }
+
+
+// class Car extends Vehicle{
+//     isRunning =false
+//     constructor(brand, model, year, vehicleType = 'Car') {
+//         //? super() parametresi en tepede olmalı (Önce parent constructor çalıştırılmalı)
+//         super(vehicleType) // run constructor of ParentClass
+//         this.brand = brand
+//         this.model = model
+//         this.year = year
+//     }
+//     runEngine() {
+//         this.isRunning = true
+//         console.log('Motor Çalıştı')
+//         return this.isRunning
+//     }
+//      //? Override: Üstteki method ile aynı isimde. Artık bu geçerli.
+//      getDetails() {
+//         console.log('Car getDetails çalıştı')
+//         // return this
+//         return {
+//             brand: this.brand,
+//             model: this.model,
+//             year: this.year,
+//             vehicleType: super.getDetails(), // Parent class metodları super ile çalıştırabilir.
+//             // vehicleIsActive: super.vehicleIsActive // super-constructor bu veriyi this'e aktardı.
+//             vehicleIsActive: this.vehicleIsActive // super constructor bu veriyi this'e aktardı.
+//         }
+//     }
+// }
+// const ford = new Car('Ford', 'Mustang', 1967, 'SUV')
+// console.log ( ford )
+// console.log ( ford.getDetails() )
+
+//? JS PUBLIC: Genel erişime açık.
+//? JS PROTECTED: Sadece Tanımlı olduğu class ve Inherit edilen child-class erişebilir.
+//? -* JS/ES12 öncesi desteklemiyor: Genel erişime açık ama lütfen dokunmayın :) 
+//? JS PRIVATE: Sadece tanımlı olduğu class içinde erişim var.
 class Vehicle {
-    vehicleIsActive=false
-    constructor(vehicleType){
-        this.vehicleType=vehicleType
+
+    vehicleIsActive = false // PUBLIC PROPERTY
+    _protectedProp = true // PROTECTED PROPERTY
+    #privateProp = true // PRIVATE PROPERTY
+
+    constructor(vehicleType) {
+        this.vehicleType = vehicleType
+    }
+
+    // Override yapma lütfen:
+    _protectedMethod() {
+        console.log('Vehicle protectedMethod çalıştı')
+        return true
+    }
+
+    #privateMethod() {
+        console.log('Vehicle privateMethod çalıştı')
+        return true
+    }
+
+    getDetails() {
+        console.log('Vehicle getDetails çalıştı')
+        console.log( 'privateProp', this.#privateProp )
+        console.log( this.#privateMethod() )
     }
 }
 
+class Car extends Vehicle {
 
-class Car extends Vehicle{
-    isRunning =false
- constructor(brand, model ,year, vehicleType="Car"){
-    super(vehicleType)
-    this.brand=brand
-    this.model=model
-    this.year=year
- }
- runEngine(){
-    this.isRunning =true
-    console.log("motor çalıştı")
-    return this.isRunning
- }
-}
+    isRunning = false
 
-const ford = new Car ("ford", "Mustaaaang", 196,"Suv") 
-console.log(ford)
+    constructor(brand, model, year, vehicleType = 'Car') {
+        super(vehicleType)
+        this.brand = brand
+        this.model = model
+        this.year = year
+    }
 
-class Accessory extends Car{
+    runEngine() {
+        this.isRunning = true
+        console.log('Motor Çalıştı')
+        return this.isRunning
+    }
 
-    constructor(accessoryName, brand, model, year, vehicleType = 'Car') {
-        super(brand, model, year, vehicleType)
-        this.accessoryName = accessoryName
+    getDetails() {
+        console.log('Car getDetails çalıştı')
+        // console.log( 'privateProp', this.#privateProp ) // NO ACCESS
+        // console.log( this.#privateMethod() ) // NO ACCESS
+        // console.log( 'privateProp', super.#privateProp ) // NO ACCESS
+        // console.log( super.#privateMethod() ) // NO ACCESS
     }
 }
 
-// const fordClimate = new Accessory("Bosh Climate","ford", "mustang", 1967 , "suv")
-const fordClimate = new Accessory("Bosh Climate",...Object.values(ford))
-console.log(fordClimate)
+const ford = new Car('Ford', 'Mustang', 1967, 'SUV')
+console.log ( ford )
+console.log ( ford.getDetails() )
+// console.log ( ford.#privateProp ) // NO ACCESS
