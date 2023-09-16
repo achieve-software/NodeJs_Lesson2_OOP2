@@ -1,5 +1,10 @@
 "use strict";
 /*   oop classes  */
+// Sınıflar ve Nesneler (Classes and Objects):  
+// Kalıtım (Inheritance): 
+// Sarmalama (Encapsulation):  
+// Çok Biçimlilik (Polymorphism):  
+
 //? OOP: Object Oriented Programming
 //? DRY: Don't Repeat Yourself
 //? BLUEPRINT: Taslak (Mimarların kullandığı mavi şablon kağıdı)
