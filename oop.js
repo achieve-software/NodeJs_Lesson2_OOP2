@@ -1,9 +1,9 @@
 "use strict";
 /*   oop classes  */
-// Sınıflar ve Nesneler (Classes and Objects):  
-// Kalıtım (Inheritance): 
-// Sarmalama (Encapsulation):  
-// Çok Biçimlilik (Polymorphism):  
+//Kalıtım (Inheritance):  extends
+// Abstraction(Soyutlama)  
+// Sarmalama (Encapsulation):  getter setter
+// Çok Biçimlilik (Polymorphism):  override-overloading
 
 //? OOP: Object Oriented Programming
 //? DRY: Don't Repeat Yourself
@@ -156,41 +156,76 @@
 //? JS PUBLIC: Genel erişime açık.
 //? JS PROTECTED: Sadece Tanımlı olduğu class ve Inherit edilen child-class erişebilir.
 //? -* JS/ES12 öncesi desteklemiyor: Genel erişime açık ama lütfen dokunmayın :) 
-//? JS PRIVATE: Sadece tanımlı olduğu class içinde erişim var.
-class Vehicle {
+// //? JS PRIVATE: Sadece tanımlı olduğu class içinde erişim var.
+// class Vehicle {
 
-    vehicleIsActive = false // PUBLIC PROPERTY
-    _protectedProp = true // PROTECTED PROPERTY
-    #privateProp = true // PRIVATE PROPERTY
+//     vehicleIsActive = false // PUBLIC PROPERTY
+//     _protectedProp = true // PROTECTED PROPERTY
+//     #privateProp = true // PRIVATE PROPERTY
 
-    constructor(vehicleType) {
-        this.vehicleType = vehicleType
-    }
+//     constructor(vehicleType) {
+//         this.vehicleType = vehicleType
+//     }
 
-    // Override yapma lütfen:
-    _protectedMethod() {
-        console.log('Vehicle protectedMethod çalıştı')
-        return true
-    }
+//     // Override yapma lütfen:
+//     _protectedMethod() {
+//         console.log('Vehicle protectedMethod çalıştı')
+//         return true
+//     }
 
-    #privateMethod() {
-        console.log('Vehicle privateMethod çalıştı')
-        return true
-    }
+//     #privateMethod() {
+//         console.log('Vehicle privateMethod çalıştı')
+//         return true
+//     }
 
-    getDetails() {
-        console.log('Vehicle getDetails çalıştı')
-        console.log( 'privateProp', this.#privateProp )
-        console.log( this.#privateMethod() )
-    }
-}
+//     getDetails() {
+//         console.log('Vehicle getDetails çalıştı')
+//         console.log( 'privateProp', this.#privateProp )
+//         console.log( this.#privateMethod() )
+//     }
+// }
 
-class Car extends Vehicle {
+// class Car extends Vehicle {
+
+//     isRunning = false
+
+//     constructor(brand, model, year, vehicleType = 'Car') {
+//         super(vehicleType)
+//         this.brand = brand
+//         this.model = model
+//         this.year = year
+//     }
+
+//     runEngine() {
+//         this.isRunning = true
+//         console.log('Motor Çalıştı')
+//         return this.isRunning
+//     }
+
+//     getDetails() {
+//         console.log('Car getDetails çalıştı')
+//         // console.log( 'privateProp', this.#privateProp ) // NO ACCESS
+//         // console.log( this.#privateMethod() ) // NO ACCESS
+//         // console.log( 'privateProp', super.#privateProp ) // NO ACCESS
+//         // console.log( super.#privateMethod() ) // NO ACCESS
+//     }
+// }
+
+// const ford = new Car('Ford', 'Mustang', 1967, 'SUV')
+// console.log ( ford )
+// console.log ( ford.getDetails() )
+// // console.log ( ford.#privateProp ) // NO ACCESS
+
+ 
+ //? GETTER & SETTER METHODS: Görevi veri getirme (getter) ve veri güncelleme (setter) olan metodlardır.
+//? "STATIC" KEYWORD: Class'dan direkt erişim. (Instance erişemez.)
+
+class Car {
 
     isRunning = false
+    #price
 
-    constructor(brand, model, year, vehicleType = 'Car') {
-        super(vehicleType)
+    constructor(brand, model, year) {
         this.brand = brand
         this.model = model
         this.year = year
@@ -198,20 +233,56 @@ class Car extends Vehicle {
 
     runEngine() {
         this.isRunning = true
-        console.log('Motor Çalıştı')
+        console.log('Motor Çalıştırıldı')
         return this.isRunning
     }
 
-    getDetails() {
-        console.log('Car getDetails çalıştı')
-        // console.log( 'privateProp', this.#privateProp ) // NO ACCESS
-        // console.log( this.#privateMethod() ) // NO ACCESS
-        // console.log( 'privateProp', super.#privateProp ) // NO ACCESS
-        // console.log( super.#privateMethod() ) // NO ACCESS
+    set setPrice(newPrice) {
+        // return this.#price = newPrice
+        this.#price = newPrice
+        console.log('Fiyat Alındı.')
+        return true
+    }
+
+    get getPrice() {
+        // return this.#price
+        return 'Fiyat: ' + (this.#price ?? 'Henüz Belirlenmedi.')
+    }
+
+    //? Direkt class ile erişmek istediklerimizi static ile işaretleriz.
+    //? Statik property veya methodlara intance ile erişilmez.
+    static staticProp = 'static value'
+
+    //? Static methodlarda this ifadesi sadece statikleri çağırır.
+    static staticMethod() {
+        console.log('Static Method çalıştı')
+        return this
     }
 }
 
-const ford = new Car('Ford', 'Mustang', 1967, 'SUV')
-console.log ( ford )
-console.log ( ford.getDetails() )
-// console.log ( ford.#privateProp ) // NO ACCESS
+const ford = new Car('Ford', 'Mustang', 1967)
+console.log(ford)
+
+
+
+console.log( ford.getPrice )
+// ford.price(5000) // CLassic method // NO ACCESS
+ford.setPrice = 5000 // Setter method
+console.log( ford.getPrice )
+
+//? STATIC METHOD EXAMPLE
+// Car.runEngine() // NO ACCESS
+const abc = Math.round(1.56)
+console.log( abc )
+
+//? Statikler instance'a aktarılmaz.
+// console.log(ford.staticMethod()) 
+console.log( Car.staticProp )
+console.log(ford)
+console.log( Car.staticMethod() )
+
+/* ------------------------------------------------------- */
+//? ABSTRACTION: Soyutlama/Modelleme (Aynı amaç için kullanılan değişken ve methodları bir class içinde yazıyor olması)
+//? ENCAPCULLATION: Kapsülleme/Ayrıştırma (Kodların gizliliği, private attre erişilemiyor olması ve birbirinden bağımsız çalışmaları.)
+/* ------------------------------------------------------- */
+
