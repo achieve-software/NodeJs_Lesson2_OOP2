@@ -86,3 +86,15 @@ class Car extends Vehicle{
 
 const ford = new Car ("ford", "Mustaaaang", 196,"Suv") 
 console.log(ford)
+
+class Accessory extends Car{
+
+    constructor(accessoryName, brand, model, year, vehicleType = 'Car') {
+        super(brand, model, year, vehicleType)
+        this.accessoryName = accessoryName
+    }
+}
+
+// const fordClimate = new Accessory("Bosh Climate","ford", "mustang", 1967 , "suv")
+const fordClimate = new Accessory("Bosh Climate",...Object.values(ford))
+console.log(fordClimate)
