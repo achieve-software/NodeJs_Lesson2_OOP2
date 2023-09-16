@@ -34,10 +34,45 @@
 // console.log(instance.extraField);
 
 
-class Car{
-    isRunning =false
- constructor(brand, model ,year){
+// class Car{
+//     isRunning =false
+//  constructor(brand, model ,year){
 
+//     this.brand=brand
+//     this.model=model
+//     this.year=year
+//  }
+//  runEngine(){
+//     this.isRunning =true
+//     console.log("motor çalıştı")
+//     return this.isRunning
+//  }
+// }
+// const ford = new Car ("ford", "Mustng", 1967)
+// console.log(ford)
+// console.log(ford.isRunning)
+// ford.runEngine()
+// console.log(ford.isRunning)
+
+// const mercedes = new Car ("Mercedes", "CLK200",2000)
+// console.log(mercedes)
+
+//? INHERITANCE: MirasAlma. Başka bir Class'ın tüm özelliklerini devralma (parent-child ilişkisi kurma)
+//? THIS: Child Class - SUPER: Parent Class
+
+
+class Vehicle {
+    vehicleIsActive=false
+    constructor(vehicleType){
+        this.vehicleType=vehicleType
+    }
+}
+
+
+class Car extends Vehicle{
+    isRunning =false
+ constructor(brand, model ,year, vehicleType="Car"){
+    super(vehicleType)
     this.brand=brand
     this.model=model
     this.year=year
@@ -48,11 +83,6 @@ class Car{
     return this.isRunning
  }
 }
-const ford = new Car ("ford", "Mustng", 1967)
-console.log(ford)
-console.log(ford.isRunning)
-ford.runEngine()
-console.log(ford.isRunning)
 
-const mercedes = new Car ("Mercedes", "CLK200",2000)
-console.log(mercedes)
+const ford = new Car ("ford", "Mustaaaang", 196,"Suv") 
+console.log(ford)
