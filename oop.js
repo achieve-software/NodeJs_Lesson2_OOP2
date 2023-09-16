@@ -1,28 +1,34 @@
-"use strict"
+"use strict";
 /*   oop classes  */
 //? OOP: Object Oriented Programming
 //? DRY: Don't Repeat Yourself
 //? BLUEPRINT: Taslak (Mimarların kullandığı mavi şablon kağıdı)
 //? CLASS: Obje türetmek için kullanılacak şablon.
 
-                //CLASS OLUŞTURMA
+//CLASS OLUŞTURMA
 //1Class Declaration:
 //----- class PascalNamedClassName{...}
 
-
 //2Class Expression:
-const PascalNamedClassName = class{
-    undefinedProperty
-    extraField="field-value"
-    methodName1(){
-        return this
-    }
-    methodName2(){
-        return this.extraField
-    }
-   }
-  
+const PascalNamedClassName = class {
+  undefinedProperty;
+  extraField = "field-value";
+  //? "new Class" ile obje oluştururken veri göndermek için "constructor" methodu kullanılır.
+  constructor(parameter1, parameter2 = "defeault-value") {
+    this.parameter1=parameter1
+    this.parameter2=parameter2
+  }
+  methodName1() {
+    return this;
+  }
+  methodName2() {
+    return this.extraField;
+  }
+};
+
 //? Instance
-const instance = new PascalNamedClassName()
-console.log(instance)
-console.log(instance.methodName2())
+const instance = new PascalNamedClassName("parameter-1-value", "parameter-2-value");
+console.log(instance);
+console.log(instance.methodName2());
+instance.extraField="new-value"
+console.log(instance.extraField);
